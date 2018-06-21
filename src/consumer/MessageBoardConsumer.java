@@ -20,10 +20,10 @@ import message.SimpleMessage;
 public class MessageBoardConsumer {
     
     // Name of the queue.
-    private final String channelName;
+    private final String CHANNEL_NAME;
     
     public MessageBoardConsumer(String channelName){
-        this.channelName = channelName;
+        this.CHANNEL_NAME = channelName;
     }
     
     public void listen() throws IOException, InterruptedException{
@@ -34,9 +34,9 @@ public class MessageBoardConsumer {
             // Establish a new connection
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
-            channel.exchangeDeclare(channelName, "fanout");
+            channel.exchangeDeclare(CHANNEL_NAME, "fanout");
             String queueName = channel.queueDeclare().getQueue();
-            channel.queueBind(queueName, channelName, "");
+            channel.queueBind(queueName, CHANNEL_NAME, "");
             
             System.out.println("Waiting for messages. To exit, press CTRL+C.");
             

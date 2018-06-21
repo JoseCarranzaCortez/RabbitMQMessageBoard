@@ -21,10 +21,10 @@ import message.SimpleMessage;
  */
 public class MessageBoardProducer {
     // Name of the queue
-    private final String QUEUE_NAME;
+    private final String CHANNEL_NAME;
     
     public MessageBoardProducer(String queueName){
-        QUEUE_NAME = queueName;
+        CHANNEL_NAME = queueName;
     }
     
     
@@ -41,11 +41,11 @@ public class MessageBoardProducer {
             Channel channel = connection.createChannel();
             
             // Declare the queue to which we will send a message.
-            channel.exchangeDeclare(QUEUE_NAME, "fanout");
-            //channel.queueDeclare(QUEUE_NAME, false,false,false, null);
+            channel.exchangeDeclare(CHANNEL_NAME, "fanout");
+            //channel.queueDeclare(CHANNEL_NAME, false,false,false, null);
             // Serialize the object and publish it to the queue.
             oos.writeObject(message);
-            channel.basicPublish(QUEUE_NAME, "", null, out.toByteArray());            
+            channel.basicPublish(CHANNEL_NAME, "", null, out.toByteArray());            
             channel.close();
             connection.close();
         } catch(TimeoutException te){
